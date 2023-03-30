@@ -47,7 +47,9 @@ class Recipe{
   String get getImage{
     return image;
   }
-
+String get getPreparationTime{
+  return preparationTime;
+}
 
  
 

@@ -18,12 +18,11 @@ class _RecipesPageState extends State<RecipesPage> {
   ];
 
   List<Recipe> listOfRecipes = [
-    Recipe(id: 1, title: "Bolinho", description: "Bolinho", preparationMethod: "Bolinho", numberOfPortion: "Bolinho", author: "Bolinho", categoryId: "Bolinho", preparationTime: "Bolinho", image: "lib/assets/images/torta.png"),
-    Recipe(id: 2, title: "Bolinho de açuçar", description: "Bolinho", preparationMethod: "Bolinho", numberOfPortion: "Bolinho", author: "Bolinho", categoryId: "Bolinho", preparationTime: "Bolinho", image: "lib/assets/images/torta.png"),
-    Recipe(id: 3, title: "Torta", description: "Bolinho", preparationMethod: "Bolinho", numberOfPortion: "Bolinho", author: "Bolinho", categoryId: "Bolinho", preparationTime: "Bolinho", image: "lib/assets/images/torta.png"),
-    Recipe(id: 4, title: "Torta 2", description: "Bolinho", preparationMethod: "Bolinho", numberOfPortion: "Bolinho", author: "Bolinho", categoryId: "Bolinho", preparationTime: "Bolinho", image: "lib/assets/images/torta.png"),
-    Recipe(id: 5, title: "Torta 3", description: "Bolinho", preparationMethod: "Bolinho", numberOfPortion: "Bolinho", author: "Bolinho", categoryId: "Bolinho", preparationTime: "Bolinho", image: "lib/assets/images/torta.png"),
-
+    Recipe(id: 1, title: "Bolinho", description: "Bolinho", preparationMethod: "Bolinho", numberOfPortion: "1", author: "João sem braço", categoryId: "Bolinho", preparationTime: "10", image: "lib/assets/images/torta.png"),
+    Recipe(id: 2, title: "Bolinho de açuçar", description: "Bolinho", preparationMethod: "Bolinho", numberOfPortion: "1", author: "João sem braço", categoryId: "Bolinho", preparationTime: "10", image: "lib/assets/images/torta.png"),
+    Recipe(id: 3, title: "Torta", description: "Bolinho", preparationMethod: "Bolinho", numberOfPortion: "1", author: "João sem braço", categoryId: "Bolinho", preparationTime: "10", image: "lib/assets/images/torta.png"),
+    Recipe(id: 4, title: "Torta 2", description: "Bolinho", preparationMethod: "Bolinho", numberOfPortion: "1", author: "João sem braço", categoryId: "Bolinho", preparationTime: "10", image: "lib/assets/images/torta.png"),
+    Recipe(id: 5, title: "Torta 3", description: "Bolinho", preparationMethod: "Bolinho", numberOfPortion: "1", author: "João sem braço", categoryId: "Bolinho", preparationTime: "10", image: "lib/assets/images/torta.png"),
   ];
 
   @override

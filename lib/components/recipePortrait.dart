@@ -1,3 +1,4 @@
+import 'package:bemgostoso/main.dart';
 import 'package:flutter/material.dart';
 
 import '../models/recipe.dart';
@@ -16,17 +17,23 @@ class RecipePortrait extends StatelessWidget {
           child:  ClipRRect(
             borderRadius: BorderRadius.circular(25),
             child: Image.asset(
-              recipe.getImage, 
-            )
+                recipe.getImage, 
+              )
           ),
         ),
         Container(
           padding: EdgeInsets.only(left: 20, right: 20),
-          child:  Text(
-            recipe.title,
-            style: TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.bold
+          child:  TextButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed(MyApp.RECIPEDETAIL, arguments: recipe);
+            },
+            child: Text(
+              recipe.title,
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                color: MyApp.primaryColor
+              ),
             ),
           ),
         )
