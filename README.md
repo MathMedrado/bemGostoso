@@ -1,16 +1,28 @@
-# bemgostoso
+# Projeto bem-gostoso
+Este sistema foi desenvolvido para a matéria "Desenvolvimento baseado em frameworks", onde o intuito da matéria foi o desenvolvimento de um sistema com o uso de dois frameworks. Este repo possui o front da aplicação desenvolvido com a linguagem dart e o framework flutter. Para acessar o back da aplicação clique no link abaixo:
+https://github.com/MateusLopesNunes/project_recipe_whith_quarkus.git
 
-A new Flutter project.
+## Descrição
+Este projeto é um aplicativo de receitas simples e descomplicado onde os próprios usuários poderão colocar suas receitas no app, e também provém uma forma de avaliação onde os usuários irão demonstrar a sua satisfação a receita. 
 
-## Getting Started
+## Autores do projeto:
+Nome: Mateus Lopes Nunes, Matheus Medrado dos Santos
 
-This project is a starting point for a Flutter application.
+## Pré requisitos
+* Android Studio
 
-A few resources to get you started if this is your first Flutter project:
+## Como executar o sistema:
+Primeiramente instale o sdk do dart e do flutter.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Dart: [Get the Dart SDK | Dart](https://dart.dev/get-dart)
+Flutter: [Install | Flutter](https://docs.flutter.dev/get-started/install)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Agora clone o projeto com o comando:
+> git clone https://github.com/MateusLopesNunes/project_recipe_whith_quarkus.git
+
+Após clonar o projeto digite o comando:
+>flutter doctor
+
+Com este comando você pode verificar se todos os requisitos necessários do flutter estão instalados
+Quando todos os requisitos estiverem instalados, ligue o emulador com o aparelho de sua preferência e digite o comando:
+> flutter run
