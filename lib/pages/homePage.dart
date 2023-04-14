@@ -1,6 +1,7 @@
 import 'package:bemgostoso/main.dart';
 import 'package:bemgostoso/models/user.dart';
 import 'package:bemgostoso/pages/recipePage.dart';
+import 'package:bemgostoso/pages/registryRecipe.dart';
 import 'package:bemgostoso/pages/userProfile.dart';
 import 'package:flutter/material.dart';
 
@@ -25,13 +26,13 @@ class _HomePageState extends State<HomePage> {
 
     final AppBarDetails = [
       "Bem Gostoso",
-      "Adicionar receita",
+      "Cadastro de receitas",
       "Perfil do usuário"
     ];
 
     final screens = [ 
       RecipesPage(),
-      Text("Add"),
+      RegistryRecipe(),
       UserProfile(user: user,),
     ];
 

@@ -4,6 +4,8 @@ import 'package:bemgostoso/models/recipe.dart';
 import 'package:flutter/material.dart';
 import 'package:bemgostoso/models/Ingredients.dart';
 
+import '../components/defaultButton.dart';
+
 class RecipeDetail extends StatelessWidget {
   const RecipeDetail({super.key});
   
@@ -100,6 +102,7 @@ class RecipeDetail extends StatelessWidget {
                     child: Row(
                       children: [
                        Container(
+                        width: availableWidth * 0.3,
                         child: Text(
                           "Serve ${recipe.getNumberOfPortion} pessoas",
                           style: TextStyle(
@@ -124,6 +127,7 @@ class RecipeDetail extends StatelessWidget {
                       ]
                     ),
                   ),
+                  Padding(padding: EdgeInsets.only(top: availableWidth * 0.01)),
                   Container(
                     child: Text(
                       "Autor: ${recipe.getAuthor} ",
@@ -136,8 +140,16 @@ class RecipeDetail extends StatelessWidget {
               ),
             ),
           ),
-          Padding(padding: EdgeInsets.only(bottom: 50)),
-
+        Padding(
+          padding: EdgeInsets.only(top: availableWidth * 0.05
+        )),
+        Center(
+          child: defaultButton(
+            label: "Ver receitas do mesmo autor", 
+            function: (){}, 
+            buttonColor: MyApp.primaryColor
+          ),
+        )
           ],
         ),
       ),
