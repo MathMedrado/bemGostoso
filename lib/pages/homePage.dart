@@ -1,3 +1,4 @@
+import 'package:bemgostoso/components/appBarSearch.dart';
 import 'package:bemgostoso/main.dart';
 import 'package:bemgostoso/models/user.dart';
 import 'package:bemgostoso/pages/recipePage.dart';
@@ -25,9 +26,9 @@ class _HomePageState extends State<HomePage> {
     User user = User(id: 1, username: "Matheus Medrado", perfilImage: "lib/assets/images/user.png", email: "matheus-13-@hotmail.com", password: "123456789", birthDate: DateTime.now(), phone: "(62) 985287539");
 
     final AppBarDetails = [
-      "Bem Gostoso",
-      "Cadastro de receitas",
-      "Perfil do usuário"
+      AppBarSearch(title: "Lista de receitas"),
+      AppBar(title: Center(child: Text("Cadastro de receitas")),backgroundColor: MyApp.primaryColor,),
+      AppBar(title: Center(child: Text("Perfil do usuário")),backgroundColor: MyApp.primaryColor,)
     ];
 
     final screens = [ 
@@ -37,13 +38,17 @@ class _HomePageState extends State<HomePage> {
     ];
 
     return Scaffold(
-      appBar: AppBar(
-        title: Center(child: Text(AppBarDetails[currentIndex])),
-        backgroundColor: MyApp.primaryColor,
-        actions: [
-          Icon(Icons.search)
-        ],
+      appBar:  PreferredSize(
+        preferredSize: Size.fromHeight(60.0),
+        child: AppBarDetails[currentIndex]
       ),
+      // AppBar(
+      //   title: Center(child: Text(AppBarDetails[currentIndex])),
+      //   backgroundColor: MyApp.primaryColor,
+      //   actions: [
+      //     Icon(Icons.search)
+      //   ],
+      //),
       body: screens[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: MyApp.primaryColor,

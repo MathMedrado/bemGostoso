@@ -1,3 +1,4 @@
+import 'package:bemgostoso/components/appBarSearch.dart';
 import 'package:bemgostoso/components/recipeTitles.dart';
 import 'package:bemgostoso/main.dart';
 import 'package:bemgostoso/models/recipe.dart';
@@ -23,9 +24,9 @@ class RecipeDetail extends StatelessWidget {
     final List<String> ListOfPreparationMethods = ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non ultrices massa. Nam porttitor ante a sodales tempus. Donec ac aliquam diam. Morbi risus metus, molestie et scelerisque at, cursus.", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non ultrices massa. Nam porttitor ante a sodales tempus. Donec ac aliquam diam. Morbi risus metus, molestie et scelerisque at, cursus.", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non ultrices massa. Nam porttitor ante a sodales tempus. Donec ac aliquam diam. Morbi risus metus, molestie et scelerisque at, cursus.", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non ultrices massa. Nam porttitor ante a sodales tempus. Donec ac aliquam diam. Morbi risus metus, molestie et scelerisque at, cursus."];
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(recipe.getTitle),
-        backgroundColor: MyApp.primaryColor,
+      appBar:  PreferredSize(
+        preferredSize: Size.fromHeight(60.0),
+        child: AppBarSearch(title: recipe.getTitle)
       ),
       body: SingleChildScrollView(
         child: Column(

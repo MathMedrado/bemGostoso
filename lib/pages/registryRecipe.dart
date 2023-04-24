@@ -17,6 +17,8 @@ class RegistryRecipe extends StatefulWidget {
 
 class _RegistryRecipeState extends State<RegistryRecipe> {
 
+
+
   final titleController = TextEditingController();
   final preparationTimeController = TextEditingController();
   final numberOfPortionsController = TextEditingController();
@@ -31,12 +33,18 @@ class _RegistryRecipeState extends State<RegistryRecipe> {
   String preparationMethod = "";
   List<String> listOfIngredients = [];
 
+
+
   void _addIngredientToList() {
     setState(() {
       print(ingredientsController.text);
       listOfIngredients.add(ingredientsController.text); // Add value to the list
       ingredientsController.clear(); // Clear the TextFormField
     });
+  }
+
+  photoFunction() async {
+
   }
 
   @override
@@ -140,13 +148,39 @@ class _RegistryRecipeState extends State<RegistryRecipe> {
                     shrinkWrap: true,
                     itemCount: listOfIngredients.length,
                     itemBuilder: (context, index) {
-                      return Text(listOfIngredients[index]);
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(listOfIngredients[index]),
+                              IconButton(
+                                onPressed: (){
+                                  listOfIngredients.remove(listOfIngredients[index]);
+                                  setState(() {
+                                    listOfIngredients = listOfIngredients;
+                                  });
+                                }, 
+                                icon: Icon(Icons.delete)
+                              )
+                            ],
+                          )
+                        ]
+                      );
                     },
                   ),
                 )
               ],
             ) 
             : Container(),
+            Container(
+              child: const Text("Adicione uma foto da receita"),
+            ),
+            ElevatedButton(
+              child: const Text("Adicionar"),
+              onPressed: photoFunction
+            )
           ],
         ),
       ),
