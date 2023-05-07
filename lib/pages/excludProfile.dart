@@ -62,7 +62,7 @@ class _ExcludProfileState extends State<ExcludProfile> {
                     hintText: "Digite o seu email",
                     label: "Email",
                     textController: Controller,
-                    initialValue: user.getUsername as String,
+                    //initialValue: user.getUsername as String,
                     validateFunc: (){},
                     onSaved: (value){
                       email = value!;
@@ -75,7 +75,7 @@ class _ExcludProfileState extends State<ExcludProfile> {
                     paddingTop: availableWidth* 0.04,
                     keyboardType: TextInputType.emailAddress,                    
                     hintText: "Digite a sua senha",
-                    initialValue: "",
+                    //initialValue: "",
                     label: "senha",
                     textController: Controller,
                     validateFunc: (){},

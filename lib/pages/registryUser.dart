@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:http/http.dart' as http;
 
 import '../components/defaultButtonRow.dart';
 import '../components/defaultInputFromField.dart';
@@ -19,14 +20,43 @@ class RegistryUser extends StatefulWidget {
 class _RegistryUserState extends State<RegistryUser> {
   
   final nameController = TextEditingController();
-  late String fullName;
+  String fullName = "";
   final emailController = TextEditingController();
-  late String email;
-  final Controller = TextEditingController();
-  late int phone;
-  late String password1;
-  late String password2;
+  String email = "";
+  final passController = TextEditingController();
+  String password1 = "";
+  final pass2Controller = TextEditingController();
+  String password2 = "";
+  final telController = TextEditingController();
+  String phone = "";
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  submitForm(String fullName, String email, String password, String phone,  ) async {
+    // print(fullName);
+    // print(email);
+    // print(password);
+    // print(phone);
+    Uri url = Uri.parse("${MyApp.baseUrl}/user");
+    var response = await http.post(
+      url, 
+      body: {
+        "userName": fullName,
+        "email": email,
+        "tel": phone,
+        "password": password,
+        "birthDate": "2023-02-27T19:32:00.009495",
+        "perfilImage": "imagem1"
+      },
+      headers: {
+          "content_type": "application/json",
+          "charset" : "utf-8"
+      }
+    );
+    print(response.statusCode);
+    print(response.body);
+
+  }
+
 
 
   @override
@@ -60,7 +90,7 @@ class _RegistryUserState extends State<RegistryUser> {
                     hintText: "Digite o seu nome completo",
                     label: "Nome Completo",
                     textController: nameController,
-                    initialValue: "",
+                    //initialValue: "",
                     validateFunc: (){},
                     onSaved: (value){
                       fullName = value!;
@@ -75,7 +105,7 @@ class _RegistryUserState extends State<RegistryUser> {
                     hintText: "Digite o seu email",
                     label: "Email",
                     textController: emailController,
-                    initialValue: "",
+                    //initialValue: "",
                     validateFunc: (){},
                     onSaved: (value){
                       email = value!;
@@ -89,11 +119,11 @@ class _RegistryUserState extends State<RegistryUser> {
                     hintText: "Digite o seu telefone",
                     label: "Telefone",
                     keyboardType: TextInputType.number,
-                    initialValue: "",
-                    textController: Controller,
+                    //initialValue: "",
+                    textController: telController,
                     validateFunc: (){},
                     onSaved: (value){
-                      phone = value as int;
+                      phone = value!;
                     },
                   ),
                   DefaultInputFormField(
@@ -102,10 +132,10 @@ class _RegistryUserState extends State<RegistryUser> {
                     paddingLeft: availableWidth * 0.01,
                     paddingTop: availableWidth* 0.04,                    
                     hintText: "Digite  a sua senha",
-                    initialValue: "",
+                    //initialValue: "",
                     label: "Senha",
                     keyboardType: TextInputType.text,
-                    textController: Controller,
+                    textController: passController,
                     validateFunc: (){},
                     onSaved: (value){
                       password1 = value!;
@@ -119,9 +149,9 @@ class _RegistryUserState extends State<RegistryUser> {
                     hintText: "Repita a sua senha",
                     label: "Senha",
                     keyboardType: TextInputType.text,
-                    textController: Controller,
+                    textController: pass2Controller,
                     validateFunc: (){},
-                    initialValue: "",
+                    //initialValue: "",
                     onSaved: (value){
                       password2 = value!;
                     },
@@ -133,9 +163,16 @@ class _RegistryUserState extends State<RegistryUser> {
                         label: "Cadastrar", 
                         function: (){
                           if (_formKey.currentState!.validate()) {
-                          _formKey.currentState!.save();
-                          print(fullName);
-                          print(email);
+                            _formKey.currentState!.save();
+                            password1 = passController.text;
+                            password2 = pass2Controller.text;
+                            if(password1 == password2){
+                              fullName = nameController.text;
+                              email = emailController.text;
+                              phone = telController.text;
+                              submitForm(fullName, email, password1, phone);
+                              
+                            }
                           }
                         }, 
                       buttonColor: MyApp.primaryColor),

@@ -8,6 +8,7 @@ import 'package:bemgostoso/pages/registryUser.dart';
 import 'package:bemgostoso/pages/searchPage.dart';
 import 'package:flutter/material.dart';
 import 'pages/home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp( const MyApp());
@@ -27,6 +28,22 @@ class MyApp extends StatelessWidget {
   static const SEARCH_PAGE = 'search_page';
 
   static const primaryColor = Color.fromARGB(1000, 235, 69, 17);
+  static const String baseUrl = "http://10.0.2.2:8080";
+  //static const String baseUrl = "http://127.0.0.1:8080";
+
+  static Future<String?> getUsername() async {
+    SharedPreferences sharedPreference = await SharedPreferences.getInstance();
+    String? username =  sharedPreference.getString("username");
+
+    return username;
+  }
+
+  static Future<String?> getPassword() async {
+    SharedPreferences sharedPreference = await SharedPreferences.getInstance();
+    String? username = sharedPreference.getString("password");
+
+    return username;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +51,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        
       ),
       home: const Home(),
       routes: {

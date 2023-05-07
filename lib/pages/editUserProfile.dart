@@ -64,7 +64,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
                     hintText: "Digite o seu nome completo",
                     label: "Nome Completo",
                     textController: Controller,
-                    initialValue: user.getUsername as String,
+                    //initialValue: user.getUsername as String,
                     validateFunc: (){},
                     onSaved: (value){
                       fullName = value!;
@@ -77,7 +77,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
                     paddingTop: availableWidth* 0.04,
                     keyboardType: TextInputType.emailAddress,                    
                     hintText: "Digite o seu email",
-                    initialValue: user.getEmail as String,
+                    //initialValue: user.getEmail as String,
                     label: "Email",
                     textController: Controller,
                     validateFunc: (){},
@@ -93,7 +93,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
                     hintText: "Digite o seu telefone",
                     label: "Telefone",
                     keyboardType: TextInputType.number,
-                    initialValue: user.getPhone as String,
+                    //initialValue: user.getPhone as String,
                     textController: Controller,
                     validateFunc: (){},
                     onSaved: (value){

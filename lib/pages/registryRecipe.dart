@@ -66,7 +66,8 @@ class _RegistryRecipeState extends State<RegistryRecipe> {
               label: "Titulo", textController: titleController, 
               validateFunc: (){}, paddingLeft: availableWidth* 0.01, 
               paddingTop: availableHeight * 0.01, 
-              keyboardType: TextInputType.name, initialValue: recipeTittle,
+              keyboardType: TextInputType.name, 
+              //initialValue: recipeTittle,
               onSaved: (String? value){
                 print(value);
               }, 
@@ -75,7 +76,8 @@ class _RegistryRecipeState extends State<RegistryRecipe> {
               label: "Tempo de preparo", textController: preparationTimeController, 
               validateFunc: (){}, paddingLeft: availableWidth* 0.01, 
               paddingTop: availableHeight * 0.02, 
-              keyboardType: TextInputType.name, initialValue: preparationTime,
+              keyboardType: TextInputType.name, 
+              //initialValue: preparationTime,
               onSaved: (String? value){
                 print(value);
               }, 
@@ -84,7 +86,8 @@ class _RegistryRecipeState extends State<RegistryRecipe> {
               label: "Número de porções", textController: numberOfPortionsController, 
               validateFunc: (){}, paddingLeft: availableWidth* 0.01, 
               paddingTop: availableHeight * 0.02, 
-              keyboardType: TextInputType.name, initialValue: numberOfPortions,
+              keyboardType: TextInputType.name, 
+              //initialValue: numberOfPortions,
               onSaved: (String? value){
                 print(value);
               }, 
@@ -103,7 +106,8 @@ class _RegistryRecipeState extends State<RegistryRecipe> {
               validateFunc: (){}, 
               paddingLeft: availableWidth* 0.01, 
               paddingTop: availableHeight * 0.02, 
-              keyboardType: TextInputType.name, initialValue: numberOfPortions,
+              keyboardType: TextInputType.name, 
+              //initialValue: numberOfPortions,
               onSaved: (String? value){
                 print(value);
               }, 
