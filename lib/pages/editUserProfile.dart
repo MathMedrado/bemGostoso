@@ -112,7 +112,8 @@ class _EditUserProfileState extends State<EditUserProfile> {
                           print(email);
                           }
                         }, 
-                      buttonColor: MyApp.primaryColor),
+                        buttonColor: MyApp.primaryColor
+                      ),
                       SizedBox(
                         width: availableWidth * 0.05,
                       ),

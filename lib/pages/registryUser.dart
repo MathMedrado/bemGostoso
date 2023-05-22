@@ -36,16 +36,15 @@ class _RegistryUserState extends State<RegistryUser> {
     // print(email);
     // print(password);
     // print(phone);
-    Uri url = Uri.parse("${MyApp.baseUrl}/user");
+    Uri url = Uri.parse("${MyApp.baseUrl}/user/create");
     var response = await http.post(
       url, 
       body: {
-        "userName": fullName,
+        "username": fullName,
         "email": email,
-        "tel": phone,
+        "telephone": phone,
         "password": password,
-        "birthDate": "2023-02-27T19:32:00.009495",
-        "perfilImage": "imagem1"
+        "birth_date": "2023-02-27T19:32:00.009495",
       },
       headers: {
           "content_type": "application/json",
@@ -54,7 +53,14 @@ class _RegistryUserState extends State<RegistryUser> {
     );
     print(response.statusCode);
     print(response.body);
-
+    if(response.statusCode == 201){
+      const SnackBar snackBar = SnackBar(content: Text("Usuário cadastrado com sucesso."), backgroundColor: Colors.green,);
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      Navigator.of(context).pop();
+    } else {
+      const SnackBar snackBar = SnackBar(content: Text("Ocorreu um erro, tente novamente mais tarde."), backgroundColor: Colors.red,);
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
   }
 
 

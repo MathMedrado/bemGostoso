@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:bemgostoso/models/user.dart';
 import 'package:bemgostoso/pages/editUserProfile.dart';
 import 'package:bemgostoso/pages/excludProfile.dart';
+import 'package:bemgostoso/pages/forgetPassword.dart';
 import 'package:bemgostoso/pages/homePage.dart';
 import 'package:bemgostoso/pages/login.dart';
 import 'package:bemgostoso/pages/recipeDetail.dart';
@@ -26,14 +29,15 @@ class MyApp extends StatelessWidget {
   static const EXCLUDPROFILE = 'exclud_profile';
   static const RECIPEDETAIL = 'recipe_detail';
   static const SEARCH_PAGE = 'search_page';
+  static const FORGET_PASSWORD = 'forget_password';
 
   static const primaryColor = Color.fromARGB(1000, 235, 69, 17);
-  static const String baseUrl = "http://10.0.2.2:8080";
-  //static const String baseUrl = "http://127.0.0.1:8080";
+  static const String baseUrl = "http://10.0.2.2:8000";
+  //static const String baseUrl = "http://200.18.164.200:8000";
 
   static Future<String?> getUsername() async {
     SharedPreferences sharedPreference = await SharedPreferences.getInstance();
-    String? username =  sharedPreference.getString("username");
+    String? username =  sharedPreference.getString("email");
 
     return username;
   }
@@ -43,6 +47,24 @@ class MyApp extends StatelessWidget {
     String? username = sharedPreference.getString("password");
 
     return username;
+  }
+
+  static Future<String> getBasicAuthentication() async {
+    SharedPreferences sharedPreference = await SharedPreferences.getInstance();
+    String? username =  sharedPreference.getString("email");
+    String? password = sharedPreference.getString("password");
+    
+    var auth = 'Basic ' + base64Encode(utf8.encode('$username:$password'));
+
+    return auth;
+  }
+
+
+  static Future<int?> getUserId() async {
+    SharedPreferences sharedPreference = await SharedPreferences.getInstance();
+    int? userId = sharedPreference.getInt("userId");
+
+    return userId;
   }
 
   @override
@@ -62,7 +84,8 @@ class MyApp extends StatelessWidget {
         EDITUSER:(context) => EditUserProfile(),
         EXCLUDPROFILE: (context) => ExcludProfile(),
         RECIPEDETAIL: (context) => const RecipeDetail(),
-        SEARCH_PAGE: (context) => const SearchPage()
+        SEARCH_PAGE: (context) => const SearchPage(),
+        FORGET_PASSWORD: (context) => const ForgetPassword()
       },
     );
   }

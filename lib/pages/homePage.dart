@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
     final screens = [ 
       RecipesPage(),
       RegistryRecipe(),
-      UserProfile(user: user,),
+      UserProfile(),
     ];
 
     return Scaffold(

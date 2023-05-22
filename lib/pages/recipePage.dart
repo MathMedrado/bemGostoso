@@ -1,9 +1,13 @@
+import 'dart:convert';
+
 import 'package:bemgostoso/components/defaultButton.dart';
 import 'package:bemgostoso/main.dart';
 import 'package:bemgostoso/models/recipe.dart';
 import 'package:flutter/material.dart';
 import '../components/recipePortrait.dart';
 import '../models/category.dart';
+import 'package:http/http.dart' as http;
+
 
 class RecipesPage extends StatefulWidget {
   const RecipesPage({super.key});
@@ -13,6 +17,9 @@ class RecipesPage extends StatefulWidget {
 }
 
 class _RecipesPageState extends State<RecipesPage> {
+
+
+  bool isLoading = false;
   List<Category> listOfCategory = [
     Category(id: 1, name: "Bolos", image: "lib/assets/images/cake.png"),
     Category(id: 2, name: "Salgados", image: "lib/assets/images/cake.png")
@@ -27,14 +34,23 @@ class _RecipesPageState extends State<RecipesPage> {
     Recipe(id: 5, title: "Torta 3", description: "Bolinho", preparationMethod: "Bolinho", numberOfPortion: "1", author: "João sem braço", categoryId: "Bolinho", preparationTime: "10", image: "lib/assets/images/torta.png"),
   ];
 
+
+
+
   @override
   Widget build(BuildContext context) {
 
     final mediaQuery = MediaQuery.of(context);
     final availableHeight = mediaQuery.size.height - mediaQuery.padding.top;
     final availableWidth = mediaQuery.size.width;
+    //getUserInfo();
 
-    return SingleChildScrollView(
+    return isLoading ?
+    const Center(
+      child: CircularProgressIndicator(),
+    )
+    :
+    SingleChildScrollView(
       
       child: Column(
         children: [

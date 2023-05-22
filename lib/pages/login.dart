@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import '../components/defaultInputField.dart';
 import '../components/logoWithName.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -37,7 +37,7 @@ class _LoginState extends State<Login> {
     }
 
     submitLogin(String email, String password) async {
-      Uri url = Uri.parse("${MyApp.baseUrl}/user/auth");
+      Uri url = Uri.parse("${MyApp.baseUrl}/login/");
       print(url);
       print(email);
       print(password);
@@ -49,14 +49,26 @@ class _LoginState extends State<Login> {
         },
         headers: {
            "content_type": "application/json",
+           "Accept" : "application/json",
            "charset" : "utf-8"
         }
       );
-      //var data  = jsonDecode(response.body);
-      print(response.statusCode);
-      print(response.body);
 
+      if(response.statusCode == 200){
+        var data = jsonDecode(response.body);
+        print(data);
 
+        SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+        sharedPreferences.setString("email", email);
+        sharedPreferences.setString("password", password);
+        sharedPreferences.setInt("userId", data["userId"]);
+
+        Navigator.of(context).pushReplacementNamed( MyApp.HOMEPAGE);
+
+      } else{
+        const SnackBar snackBar = SnackBar(content: Text("email ou senha estão incorretos."), backgroundColor: Colors.red,);
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
     }
 
 
@@ -105,7 +117,9 @@ class _LoginState extends State<Login> {
               buttonColor: primaryColor
             ),
             DefaultTextButton(
-              function: (){}, 
+              function: (){
+                Navigator.of(context).pushNamed(MyApp.FORGET_PASSWORD);
+              }, 
               label: "Esqueceu a Senha", 
               buttonColor: primaryColor)
           ],
