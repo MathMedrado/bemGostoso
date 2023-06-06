@@ -16,7 +16,7 @@ class RecipePortrait extends StatelessWidget {
           padding: EdgeInsets.only(left: 20, right: 20),
           child:  ClipRRect(
             borderRadius: BorderRadius.circular(25),
-            child: Image.asset(
+            child: Image.network(
                 recipe.getImage, 
               )
           ),

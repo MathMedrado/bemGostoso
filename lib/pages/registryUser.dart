@@ -1,6 +1,7 @@
 import 'package:bemgostoso/components/defaultButton.dart';
 import 'package:bemgostoso/components/defaultInputField.dart';
 import 'package:bemgostoso/main.dart';
+import 'package:bemgostoso/pages/homePage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -32,10 +33,10 @@ class _RegistryUserState extends State<RegistryUser> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   submitForm(String fullName, String email, String password, String phone,  ) async {
-    // print(fullName);
-    // print(email);
-    // print(password);
-    // print(phone);
+    print(fullName);
+    print(email);
+    print(password);
+    print(phone);
     Uri url = Uri.parse("${MyApp.baseUrl}/user/create");
     var response = await http.post(
       url, 
@@ -44,7 +45,7 @@ class _RegistryUserState extends State<RegistryUser> {
         "email": email,
         "telephone": phone,
         "password": password,
-        "birth_date": "2023-02-27T19:32:00.009495",
+        "birth_date": "2023-02-27",
       },
       headers: {
           "content_type": "application/json",
@@ -56,7 +57,7 @@ class _RegistryUserState extends State<RegistryUser> {
     if(response.statusCode == 201){
       const SnackBar snackBar = SnackBar(content: Text("Usuário cadastrado com sucesso."), backgroundColor: Colors.green,);
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      Navigator.of(context).pop();
+      
     } else {
       const SnackBar snackBar = SnackBar(content: Text("Ocorreu um erro, tente novamente mais tarde."), backgroundColor: Colors.red,);
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -168,6 +169,7 @@ class _RegistryUserState extends State<RegistryUser> {
                       defaultButtonRow(
                         label: "Cadastrar", 
                         function: (){
+                          
                           if (_formKey.currentState!.validate()) {
                             _formKey.currentState!.save();
                             password1 = passController.text;
@@ -177,6 +179,7 @@ class _RegistryUserState extends State<RegistryUser> {
                               email = emailController.text;
                               phone = telController.text;
                               submitForm(fullName, email, password1, phone);
+                              print("hello");
                               
                             }
                           }

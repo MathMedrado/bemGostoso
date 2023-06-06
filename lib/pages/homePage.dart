@@ -16,7 +16,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  int currentIndex = 0;
+   int currentIndex = 0;
+    
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +37,8 @@ class _HomePageState extends State<HomePage> {
       RegistryRecipe(),
       UserProfile(),
     ];
+
+
 
     return Scaffold(
       appBar:  PreferredSize(

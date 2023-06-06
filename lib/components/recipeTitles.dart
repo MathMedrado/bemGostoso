@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../models/recipe.dart';
 
 
 class RecipeTitles extends StatelessWidget {

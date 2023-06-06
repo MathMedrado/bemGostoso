@@ -32,8 +32,8 @@ class _AppBarSearchState extends State<AppBarSearch> {
       onSubmitted: (text) {
          searchText.value = text;
          print(text);
-         final Recipe recipe =  Recipe(id: 1, title: text, description: "Bolinho", preparationMethod: "Bolinho", numberOfPortion: "1", author: "João sem braço", categoryId: "Bolinho", preparationTime: "10", image: "lib/assets/images/torta.png");
-         Navigator.pushNamed(context, MyApp.SEARCH_PAGE, arguments: recipe);
+         //final Recipe recipe =  Recipe(id: 1, title: text, description: "Bolinho", preparationMethod: "Bolinho", numberOfPortion: "1", author: "João sem braço", categoryId: "Bolinho", preparationTime: "10", image: "lib/assets/images/torta.png", Ingredients: []);
+         //Navigator.pushNamed(context, MyApp.SEARCH_PAGE, arguments: recipe);
 
       },
       appBarBuilder: (context) {

@@ -1,15 +1,37 @@
+import 'dart:convert';
+
 import 'package:bemgostoso/components/appBarSearch.dart';
 import 'package:bemgostoso/components/recipeTitles.dart';
 import 'package:bemgostoso/main.dart';
 import 'package:bemgostoso/models/recipe.dart';
 import 'package:flutter/material.dart';
 import 'package:bemgostoso/models/Ingredients.dart';
+import 'package:http/http.dart' as http;
 
 import '../components/defaultButton.dart';
+import '../components/recipeTitleEdit.dart';
 
 class RecipeDetail extends StatelessWidget {
   const RecipeDetail({super.key});
   
+  sendToAuthorPage(int id, context) async {
+    List<Recipe> listOfRecipeAuthor = [];
+    Uri url = Uri.parse("${MyApp.baseUrl}/app/recipe?user=${id}");
+    var response = await http.get(url);
+    print(response.body);
+    print(id);
+    if(response.statusCode == 200){
+      var data = jsonDecode(response.body);
+      data.forEach(
+        (element){
+          List<String> newListingredients = [];
+          newListingredients = MyApp.manipulationListIngredient(element["ingredient"]);
+          listOfRecipeAuthor.add(Recipe(id: element["id"], title: element["title"], authorId: element["user"]["id"], preparationMethod: element["preparation_method"], numberOfPortion: element["number_of_portion"], author: element["user"]["username"], categoryId: element["category"]["id"], categoryName: element["category"]["name"], preparationTime: "${element["preparation_time"]}", image: element["recipe_image"], Ingredients: newListingredients));
+        }
+      );
+      Navigator.of(context).pushNamed(MyApp.AUTHOR_PAGE, arguments: listOfRecipeAuthor);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +41,7 @@ class RecipeDetail extends StatelessWidget {
     final mediaQuery = MediaQuery.of(context);
     final availableHeight = mediaQuery.size.height - mediaQuery.padding.top;
     final availableWidth = mediaQuery.size.width;
-    final Ingredients ingredients = Ingredients(id: 1, name: ["Leite", "farinha", "Morangos", "Ovos", "Pouvilho", "Manteiga"]);
-    final List<String> ListOfIngredients = ingredients.getName;
-    final List<String> ListOfPreparationMethods = ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non ultrices massa. Nam porttitor ante a sodales tempus. Donec ac aliquam diam. Morbi risus metus, molestie et scelerisque at, cursus.", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non ultrices massa. Nam porttitor ante a sodales tempus. Donec ac aliquam diam. Morbi risus metus, molestie et scelerisque at, cursus.", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non ultrices massa. Nam porttitor ante a sodales tempus. Donec ac aliquam diam. Morbi risus metus, molestie et scelerisque at, cursus.", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non ultrices massa. Nam porttitor ante a sodales tempus. Donec ac aliquam diam. Morbi risus metus, molestie et scelerisque at, cursus."];
+    final List<String> ListOfPreparationMethods = [recipe.getPreparationMethod];
 
     return Scaffold(
       appBar:  PreferredSize(
@@ -32,7 +52,7 @@ class RecipeDetail extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-          RecipeTitles(availableHeight: availableHeight, availableWidth: availableWidth, color: MyApp.primaryColor, label: recipe.getTitle),
+          RecipeTitleEdit(availableHeight: availableHeight, availableWidth: availableWidth, color: MyApp.primaryColor, label: recipe.getTitle, recipe: recipe),
           Center(
             child: Container(
               width: availableWidth * 0.8,
@@ -40,7 +60,7 @@ class RecipeDetail extends StatelessWidget {
               padding: EdgeInsets.only( top: availableHeight * 0.02),
               child:  ClipRRect(
                 borderRadius: BorderRadius.circular(25),
-                child: Image.asset(
+                child: Image.network(
                     recipe.getImage, 
                     fit: BoxFit.cover,
           
@@ -51,7 +71,7 @@ class RecipeDetail extends StatelessWidget {
           RecipeTitles(availableHeight: availableHeight, availableWidth: availableWidth, color: MyApp.primaryColor, label: "Ingredientes"),
           Column(
             children: 
-              ListOfIngredients.map((Ingredient) {
+              recipe.Ingredients.map((Ingredient) {
                   return Container(
                     padding: EdgeInsets.only(left: availableWidth * 0.08, right: availableHeight * 0.08, top: availableHeight * 0.01),
                     child: Row(
@@ -147,7 +167,10 @@ class RecipeDetail extends StatelessWidget {
         Center(
           child: defaultButton(
             label: "Ver receitas do mesmo autor", 
-            function: (){}, 
+            function: (){
+              print(recipe.getAuthorId);
+              sendToAuthorPage(recipe.getAuthorId, context);
+            }, 
             buttonColor: MyApp.primaryColor
           ),
         )

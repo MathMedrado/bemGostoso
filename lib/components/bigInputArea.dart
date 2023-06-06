@@ -16,7 +16,6 @@ class BigInputArea extends StatelessWidget {
       required this.paddingTop,
       required this.onSaved,
       required this.keyboardType, 
-      required this.initialValue
     });
 
   final TextEditingController textController;
@@ -29,7 +28,6 @@ class BigInputArea extends StatelessWidget {
   final double paddingTop;
   final FormFieldSetter<String> onSaved;
   final TextInputType keyboardType;
-  final String initialValue;
   
 
 
@@ -39,9 +37,8 @@ class BigInputArea extends StatelessWidget {
       width: definedWidth,
       padding: EdgeInsets.only(left: paddingLeft, top: paddingTop,),
       child: TextFormField(
-         //controller: textController,
+         controller: textController,
          onSaved: onSaved,
-         initialValue: initialValue,
          keyboardType: keyboardType,
          maxLines: 6,
           decoration: InputDecoration(

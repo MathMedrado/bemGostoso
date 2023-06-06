@@ -53,6 +53,8 @@ class _LoginState extends State<Login> {
            "charset" : "utf-8"
         }
       );
+      print(response.body);
+      print(response.statusCode);
 
       if(response.statusCode == 200){
         var data = jsonDecode(response.body);
