@@ -2,24 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-class DefaultInputFormField extends StatelessWidget {
-  DefaultInputFormField(
+class DefaultInputFormFieldWithRecipe extends StatelessWidget {
+  DefaultInputFormFieldWithRecipe(
     {
       super.key,
       required this.BorderColor,
       required this.definedWidth,
       required this.hintText,
       required this.label,
-      required this.textController,
+      // required this.textController,
       required this.validateFunc,
       required this.paddingLeft,
       required this.paddingTop,
       required this.onSaved,
       required this.keyboardType,
-      //required this.initialValue
+      required this.initialValue
     });
 
-  final TextEditingController textController;
+  // final TextEditingController textController;
   final  String? label;
   final String? hintText;
   final Function() validateFunc;
@@ -29,7 +29,7 @@ class DefaultInputFormField extends StatelessWidget {
   final double paddingTop;
   final FormFieldSetter<String> onSaved;
   final TextInputType keyboardType;
-  //final String initialValue;
+  final String initialValue;
   
 
 
@@ -39,9 +39,9 @@ class DefaultInputFormField extends StatelessWidget {
       width: definedWidth,
       padding: EdgeInsets.only(left: paddingLeft, top: paddingTop),
       child: TextFormField(
-         controller: textController,
+        //  controller: textController,
          onSaved: onSaved,
-         //initialValue: initialValue,
+         initialValue: initialValue,
          keyboardType: keyboardType,
           decoration: InputDecoration(
             label: Text(label!),

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:bemgostoso/models/user.dart';
 import 'package:bemgostoso/pages/authorSearchPage.dart';
 import 'package:bemgostoso/pages/categorySearchPage.dart';
+import 'package:bemgostoso/pages/editRecipePage.dart';
 import 'package:bemgostoso/pages/editUserProfile.dart';
 import 'package:bemgostoso/pages/excludProfile.dart';
 import 'package:bemgostoso/pages/forgetPassword.dart';
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
   static const FORGET_PASSWORD = 'forget_password';
   static const CATEGORY_PAGE = "category_page";
   static const AUTHOR_PAGE = "author_page";
+  static const EDIT_RECIPE_PAGE = "edit_recipe_page";
 
   static const primaryColor = Color.fromARGB(1000, 235, 69, 17);
   //static const String baseUrl = "http://10.0.2.2:8000";
@@ -99,7 +101,8 @@ class MyApp extends StatelessWidget {
         SEARCH_PAGE: (context) => const SearchPage(),
         FORGET_PASSWORD: (context) => const ForgetPassword(),
         CATEGORY_PAGE:(context) => const CategorySearchPage(),
-        AUTHOR_PAGE: (context) => const AuthorSearchPage()
+        AUTHOR_PAGE: (context) => const AuthorSearchPage(),
+        EDIT_RECIPE_PAGE:(context) => const EditRecipePage()
       },
     );
   }

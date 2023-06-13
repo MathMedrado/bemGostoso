@@ -51,6 +51,12 @@ class _RecipeTitleEditState extends State<RecipeTitleEdit> {
     }
   }
 
+  editRecipe(Recipe recipe){
+    int newRecipeId = recipe.getId;
+    Navigator.of(context).pushNamed(MyApp.EDIT_RECIPE_PAGE, arguments: recipe);
+
+  }
+
   @override
   Widget build(BuildContext context) {
     
@@ -67,7 +73,7 @@ class _RecipeTitleEditState extends State<RecipeTitleEdit> {
                 color: widget.color
               ),
             ),
-            Padding(padding: EdgeInsets.only(left: widget.availableWidth * 0.4)),
+            Padding(padding: EdgeInsets.only(left: widget.availableWidth * 0.2)),
             userId == widget.recipe.getAuthorId ? 
             ElevatedButton(
               style: ButtonStyle(
@@ -77,7 +83,18 @@ class _RecipeTitleEditState extends State<RecipeTitleEdit> {
                 deleteRecipe(widget.recipe);
               }, 
               child: Icon(Icons.delete, color: Colors.white  )) :
-              Container(child: Text("jaja"),)
+              Container(),
+            Padding(padding: EdgeInsets.only(left: widget.availableWidth * 0.02)),
+            userId == widget.recipe.getAuthorId ? 
+            ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStatePropertyAll(widget.color)
+              ),
+              onPressed: (){
+                editRecipe(widget.recipe);
+              }, 
+              child: Icon(Icons.edit_square, color: Colors.white  )) :
+              Container()
           ],
         ),
       );

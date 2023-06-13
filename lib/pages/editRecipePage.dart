@@ -1,29 +1,28 @@
 import 'dart:convert';
 
-import 'package:bemgostoso/components/bigInputArea.dart';
-import 'package:bemgostoso/components/defaultButton.dart';
-import 'package:bemgostoso/components/defaultInputFromField.dart';
-import 'package:bemgostoso/main.dart';
-import 'package:bemgostoso/models/Ingredients.dart';
-import 'package:bemgostoso/models/recipe.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:flutter/material.dart';
-
+import '../components/bigInputArea.dart';
+import '../components/defaultButton.dart';
 import '../components/defaultInputField.dart';
+import '../components/defaultInputFieldWithRecipe.dart';
+import '../components/defaultInputFromField.dart';
 import '../components/dropdownMenu.dart';
+import '../main.dart';
 import '../models/category.dart';
+import '../models/recipe.dart';
 
-class RegistryRecipe extends StatefulWidget {
-  const RegistryRecipe({super.key});
+class EditRecipePage extends StatefulWidget {
+  const EditRecipePage({super.key});
 
   @override
-  State<RegistryRecipe> createState() => _RegistryRecipeState();
+  State<EditRecipePage> createState() => _EditRecipePageState();
 }
 
-class _RegistryRecipeState extends State<RegistryRecipe> {
-
+class _EditRecipePageState extends State<EditRecipePage> {
 
   @override
   void initState() {
@@ -58,7 +57,7 @@ class _RegistryRecipeState extends State<RegistryRecipe> {
     });
   }
 
-  getCategory() async {
+    getCategory() async {
     List<Category> allListOfCategory = [];
 
     Uri url = Uri.parse("${MyApp.baseUrl}/app/category/");
@@ -85,60 +84,41 @@ class _RegistryRecipeState extends State<RegistryRecipe> {
     }
   }
 
-  submitForm() async {
-    int? userId = await MyApp.getUserId();
-    print(listOfIngredients);
-    print(preparationMethod);
-    print(preparationTime);
-    print(categoryName);
-    Uri url = Uri.parse("${MyApp.baseUrl}/app/recipe");
-    var response = await http.post(
-      url,
-      body: {
-        "title": recipeTittle,
-        "number_of_portion": numberOfPortions,
-        "preparation_method": preparationMethod,
-        "preparation_time": preparationTime,
-        "category": categoryName,
-        "user": "$userId",
-        "ingredient": "${listOfIngredients}"
-      }
-    );
-    print(response.body);
-    print(response.statusCode);
-    if(response.statusCode == 200){
-        const SnackBar snackBar = SnackBar(content: Text("Receita cadastrada com sucesso."), backgroundColor: Colors.green,);
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-        Navigator.of(context).pushReplacementNamed( MyApp.HOMEPAGE);
-
-    } else {
-        const SnackBar snackBar = SnackBar(content: Text("Ocorreu um erro ao cadastrar a receita, tente novamente mais tarde."), backgroundColor: Colors.red,);
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    }
-
-  }
-
 
   @override
   Widget build(BuildContext context) {
+
     final mediaQuery = MediaQuery.of(context);
     final availableHeight = mediaQuery.size.height - mediaQuery.padding.top;
     final availableWidth = mediaQuery.size.width;
+    var parameter = ModalRoute.of(context)!.settings.arguments;
+    Recipe recipe = parameter as Recipe;
 
-  
-    return SingleChildScrollView(
+    // setState(() {
+    //   recipeTittle = recipe.getTitle;
+    //   preparationTime = recipe.getPreparationTime;
+    //   numberOfPortions = recipe.getNumberOfPortion;
+    //   preparationMethod = recipe.getPreparationMethod;
+    //   categoryName = recipe.getCategoryName;
+    //   listOfIngredients = recipe.getIngredients;
+    // });
+
+
+    return Scaffold(
+      appBar: AppBar(title: Text(" Alteração da receita ${recipe.getTitle}"), backgroundColor: MyApp.primaryColor,),
+      body: SingleChildScrollView(
       child: Form(
         key: _formKey,
         child: Column(
           children: [
             Padding(
               padding: EdgeInsets.only(top: availableHeight * 0.01, bottom: availableHeight * 0.01)),
-              DefaultInputFormField(BorderColor: MyApp.primaryColor, definedWidth: availableWidth * 0.9, hintText: "Digite o titulo da sua receita", 
-              label: "Titulo", textController: titleController, 
+              DefaultInputFormFieldWithRecipe(BorderColor: MyApp.primaryColor, definedWidth: availableWidth * 0.9, hintText: "Digite o titulo da sua receita", 
+              label: "Titulo", 
               validateFunc: (){}, paddingLeft: availableWidth* 0.01, 
               paddingTop: availableHeight * 0.01, 
               keyboardType: TextInputType.name, 
-              //initialValue: recipeTittle,
+              initialValue: recipe.getTitle,
               onSaved: (String? value){
                 recipeTittle =  titleController.text;
                 print(value);
@@ -263,7 +243,6 @@ class _RegistryRecipeState extends State<RegistryRecipe> {
                 if (_formKey.currentState!.validate()) {
                    _formKey.currentState!.save();
                   
-                   submitForm();  
                 }
               }, 
               buttonColor: MyApp.primaryColor
@@ -271,6 +250,7 @@ class _RegistryRecipeState extends State<RegistryRecipe> {
           ],
         ),
       ),
+    ),
     );
   }
 }
