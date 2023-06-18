@@ -91,7 +91,8 @@ class _RegistryRecipeState extends State<RegistryRecipe> {
     print(preparationMethod);
     print(preparationTime);
     print(categoryName);
-    Uri url = Uri.parse("${MyApp.baseUrl}/app/recipe");
+    print(userId);
+    Uri url = Uri.parse("${MyApp.baseUrl}/app/recipe/");
     var response = await http.post(
       url,
       body: {
@@ -106,7 +107,7 @@ class _RegistryRecipeState extends State<RegistryRecipe> {
     );
     print(response.body);
     print(response.statusCode);
-    if(response.statusCode == 200){
+    if(response.statusCode == 201){
         const SnackBar snackBar = SnackBar(content: Text("Receita cadastrada com sucesso."), backgroundColor: Colors.green,);
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
         Navigator.of(context).pushReplacementNamed( MyApp.HOMEPAGE);

@@ -5,6 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../components/defaultButtonRow.dart';
 import '../components/defaultInputFromField.dart';
@@ -23,9 +25,29 @@ class _ExcludProfileState extends State<ExcludProfile> {
   
   late String username;
   late String email;
-  final Controller = TextEditingController();
+  final userController = TextEditingController();
+  final passController = TextEditingController();
   late String password1;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  submitExcludeUser() async {
+    int? userId = await MyApp.getUserId();
+    Uri url = Uri.parse("${MyApp.baseUrl}/user/$userId/");
+    var response = await http.delete(url);
+    print(response.statusCode);
+    print(response.body);
+    if(response.statusCode == 204){
+      const SnackBar snackBar = SnackBar(content: Text("Usuário removido com sucesso."), backgroundColor: Colors.green,);
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      await preferences.clear();
+      Navigator.of(context).pushNamed(MyApp.APPHOME);
+
+    } else {
+      const SnackBar snackBar = SnackBar(content: Text("Ocorreu um erro, ao excluir a sua conta."), backgroundColor: Colors.red,);
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+  }
 
 
   @override
@@ -61,7 +83,7 @@ class _ExcludProfileState extends State<ExcludProfile> {
                     keyboardType: TextInputType.text,
                     hintText: "Digite o seu email",
                     label: "Email",
-                    textController: Controller,
+                    textController: userController,
                     //initialValue: user.getUsername as String,
                     validateFunc: (){},
                     onSaved: (value){
@@ -77,10 +99,10 @@ class _ExcludProfileState extends State<ExcludProfile> {
                     hintText: "Digite a sua senha",
                     //initialValue: "",
                     label: "senha",
-                    textController: Controller,
+                    textController: passController,
                     validateFunc: (){},
                     onSaved: (value){
-                      email = value!;
+                      password1 = value!;
                     },
                   ),
                   Row(
@@ -92,6 +114,7 @@ class _ExcludProfileState extends State<ExcludProfile> {
                           if (_formKey.currentState!.validate()) {
                           _formKey.currentState!.save();
                           print(email);
+                          submitExcludeUser();
                           }
                         }, 
                       buttonColor: MyApp.primaryColor),

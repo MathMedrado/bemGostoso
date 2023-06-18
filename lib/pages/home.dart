@@ -37,14 +37,6 @@ class Home extends StatelessWidget {
                     }, 
                     buttonColor: MyApp.primaryColor
                   ),
-                  defaultButton(
-                    label: "Entrar sem cadastro", 
-                    function: (){
-                      Navigator.of(context).pushReplacementNamed(MyApp.HOMEPAGE);
-                    }, 
-                    buttonColor: MyApp.primaryColor
-                  ),
-
               ],
             ),
             )

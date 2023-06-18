@@ -65,7 +65,7 @@ class _LoginState extends State<Login> {
         sharedPreferences.setString("password", password);
         sharedPreferences.setInt("userId", data["userId"]);
 
-        Navigator.of(context).pushReplacementNamed( MyApp.HOMEPAGE);
+        Navigator.pushReplacementNamed(context,  MyApp.HOMEPAGE);
 
       } else{
         const SnackBar snackBar = SnackBar(content: Text("email ou senha estão incorretos."), backgroundColor: Colors.red,);

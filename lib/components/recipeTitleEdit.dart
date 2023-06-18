@@ -32,16 +32,15 @@ class _RecipeTitleEditState extends State<RecipeTitleEdit> {
 
   deleteRecipe(Recipe recipe) async {
     int newRecipeId = recipe.getId;
-    Uri url = Uri.parse("${MyApp.baseUrl}/app/recipe/${newRecipeId}");
+    Uri url = Uri.parse("${MyApp.baseUrl}/app/recipe/${newRecipeId}/");
     var response = await http.delete(url);
     print(response.statusCode);
     print(response.body);
     print(url);
     if(response.statusCode == 204){
-
       SnackBar snackbar = SnackBar(content: Text("Sua receita foi excluida com sucesso!", selectionColor: Colors.green,));
       ScaffoldMessenger.of(context).showSnackBar(snackbar);
-      Navigator.of(context).pop();
+      Navigator.of(context).pushReplacementNamed(MyApp.HOMEPAGE);
 
     } else {
       SnackBar snackbar = SnackBar(content: Text("ocorreu um erro ao exluir a receita!", selectionColor: Colors.red,));
@@ -64,37 +63,46 @@ class _RecipeTitleEditState extends State<RecipeTitleEdit> {
 
     return Container(
         padding: EdgeInsets.only(top: widget.availableHeight * 0.02, left: widget.availableWidth * 0.08),
-        child: Row(
+        child: Column(
           children: [
-            Text(
-              widget.label,
-              style: TextStyle(
-                fontSize: 25,
-                color: widget.color
-              ),
+            Row(
+              children: [
+                Text(
+                  widget.label,
+                  style: TextStyle(
+                    fontSize: 25,
+                    color: widget.color
+                  ),
+                ),
+                
+              ],
             ),
-            Padding(padding: EdgeInsets.only(left: widget.availableWidth * 0.2)),
-            userId == widget.recipe.getAuthorId ? 
-            ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStatePropertyAll(widget.color)
-              ),
-              onPressed: (){
-                deleteRecipe(widget.recipe);
-              }, 
-              child: Icon(Icons.delete, color: Colors.white  )) :
-              Container(),
-            Padding(padding: EdgeInsets.only(left: widget.availableWidth * 0.02)),
-            userId == widget.recipe.getAuthorId ? 
-            ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStatePropertyAll(widget.color)
-              ),
-              onPressed: (){
-                editRecipe(widget.recipe);
-              }, 
-              child: Icon(Icons.edit_square, color: Colors.white  )) :
-              Container()
+            Row(
+              children: [
+                Padding(padding: EdgeInsets.only(left: widget.availableWidth * 0.5)),
+                userId == widget.recipe.getAuthorId ? 
+                ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll(widget.color)
+                  ),
+                  onPressed: (){
+                    deleteRecipe(widget.recipe);
+                  }, 
+                  child: Icon(Icons.delete, color: Colors.white  )) :
+                  Container(),
+                Padding(padding: EdgeInsets.only(left: widget.availableWidth * 0.02)),
+                userId == widget.recipe.getAuthorId ? 
+                ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll(widget.color)
+                  ),
+                  onPressed: (){
+                    editRecipe(widget.recipe);
+                  }, 
+                  child: Icon(Icons.edit_square, color: Colors.white  )) :
+                  Container()
+              ],
+            )
           ],
         ),
       );

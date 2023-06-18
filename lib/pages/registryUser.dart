@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:validatorless/validatorless.dart';
 import '../components/defaultButtonRow.dart';
 import '../components/defaultInputFromField.dart';
 
@@ -31,6 +32,7 @@ class _RegistryUserState extends State<RegistryUser> {
   final telController = TextEditingController();
   String phone = "";
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String birthdate = "";
 
   submitForm(String fullName, String email, String password, String phone,  ) async {
     print(fullName);
@@ -45,7 +47,7 @@ class _RegistryUserState extends State<RegistryUser> {
         "email": email,
         "telephone": phone,
         "password": password,
-        "birth_date": "2023-02-27",
+        "birth_date": birthdate,
       },
       headers: {
           "content_type": "application/json",
@@ -57,6 +59,7 @@ class _RegistryUserState extends State<RegistryUser> {
     if(response.statusCode == 201){
       const SnackBar snackBar = SnackBar(content: Text("Usuário cadastrado com sucesso."), backgroundColor: Colors.green,);
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      Navigator.of(context).pop();
       
     } else {
       const SnackBar snackBar = SnackBar(content: Text("Ocorreu um erro, tente novamente mais tarde."), backgroundColor: Colors.red,);
@@ -71,6 +74,7 @@ class _RegistryUserState extends State<RegistryUser> {
     final mediaQuery = MediaQuery.of(context);
     final availableHeight = mediaQuery.size.height - mediaQuery.padding.top;
     final availableWidth = mediaQuery.size.width;
+    var maskData = MaskTextInputFormatter(mask: '##/##/####');
 
     return Scaffold(
       appBar: AppBar(
@@ -133,6 +137,62 @@ class _RegistryUserState extends State<RegistryUser> {
                       phone = value!;
                     },
                   ),
+                   Padding(
+                      padding: EdgeInsets.only(left: availableWidth * 0.01, top:  availableWidth* 0.04),
+                      child: Container(
+                        width: availableWidth * 0.92,
+                        child: TextFormField(
+                          validator: Validatorless.multiple([
+                            Validatorless.required(
+                                "Data de Nascimento Obrigatória"),
+                          ]),
+                          onSaved: (newValue) => birthdate =
+                              newValue!.split('/').reversed.join("-"),
+                          initialValue: maskData.maskText(birthdate
+                              .toString()
+                              .split('-')
+                              .reversed
+                              .join("")),
+                          cursorColor: Colors.green[900],
+                          inputFormatters: [maskData],
+                          keyboardType: TextInputType.datetime,
+                          decoration: InputDecoration(
+                            labelText: 'Data de Nascimento',
+                            hintText: '',
+                            hintStyle: TextStyle(color: MyApp.primaryColor),
+                            labelStyle: TextStyle(color: MyApp.primaryColor),
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            alignLabelWithHint: true,
+                            contentPadding: EdgeInsets.all(10),
+                            border: OutlineInputBorder(),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(5)),
+                              borderSide: BorderSide(color: (MyApp.primaryColor)!),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: (MyApp.primaryColor)!,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  // DefaultInputFormField(
+                  //   BorderColor: MyApp.primaryColor,
+                  //   definedWidth: availableWidth * 0.92,
+                  //   paddingLeft: availableWidth * 0.01,
+                  //   paddingTop: availableWidth* 0.04,                    
+                  //   hintText: "Digite a sua data de nascimento",
+                  //   label: "Data de nascimento",
+                  //   keyboardType: TextInputType.number,
+                  //   //initialValue: "",
+                  //   textController: telController,
+                  //   validateFunc: (){},
+                  //   onSaved: (value){
+                  //     phone = value!;
+                  //   },
+                  // ),
                   DefaultInputFormField(
                     BorderColor: MyApp.primaryColor,
                     definedWidth: availableWidth * 0.92,

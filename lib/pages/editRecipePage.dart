@@ -49,6 +49,13 @@ class _EditRecipePageState extends State<EditRecipePage> {
   List<Category> listOfCategory = [];
   Map<String, String> mapOfCategoryAndId = {};
 
+  void _alteringTheListOfIngredients(List<String> list) {
+    setState(() {
+      listOfIngredients = list;
+    });
+  }
+    
+
   void _addIngredientToList() {
     setState(() {
       print(ingredientsController.text);
@@ -84,6 +91,38 @@ class _EditRecipePageState extends State<EditRecipePage> {
     }
   }
 
+  _submitAlteringRecipe(int recipeId) async {
+    int? userId = await MyApp.getUserId();
+    Uri url = Uri.parse("${MyApp.baseUrl}/app/recipe/${recipeId}/");
+    print(numberOfPortions);
+    print(preparationTime);
+    print(categoryName);
+    print(listOfIngredients);
+    var response = await http.put(
+      url,
+      body: {
+        "title": recipeTittle,
+        "number_of_portion": numberOfPortions,
+        "preparation_method": preparationMethod,
+        "preparation_time": preparationTime,
+        "category": categoryName,
+        "user": "$userId",
+        "ingredient": "${listOfIngredients}"
+      }
+    );
+    print(response.body);
+    print(response.statusCode);
+    if(response.statusCode == 200){
+        const SnackBar snackBar = SnackBar(content: Text("A receita foi alterada com sucesso."), backgroundColor: Colors.green,);
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        Navigator.of(context).pushReplacementNamed( MyApp.HOMEPAGE);
+
+    } else {
+        const SnackBar snackBar = SnackBar(content: Text("Ocorreu um erro ao alterar a sua  receita, tente novamente mais tarde."), backgroundColor: Colors.red,);
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -93,6 +132,7 @@ class _EditRecipePageState extends State<EditRecipePage> {
     final availableWidth = mediaQuery.size.width;
     var parameter = ModalRoute.of(context)!.settings.arguments;
     Recipe recipe = parameter as Recipe;
+    _alteringTheListOfIngredients(recipe.getIngredients);
 
     // setState(() {
     //   recipeTittle = recipe.getTitle;
@@ -102,6 +142,7 @@ class _EditRecipePageState extends State<EditRecipePage> {
     //   categoryName = recipe.getCategoryName;
     //   listOfIngredients = recipe.getIngredients;
     // });
+
 
 
     return Scaffold(
@@ -120,18 +161,22 @@ class _EditRecipePageState extends State<EditRecipePage> {
               keyboardType: TextInputType.name, 
               initialValue: recipe.getTitle,
               onSaved: (String? value){
-                recipeTittle =  titleController.text;
+                recipeTittle =  value!;
                 print(value);
               }, 
             ),
-            DefaultInputFormField(BorderColor: MyApp.primaryColor, definedWidth: availableWidth * 0.9, hintText: "Informe o tempo de preparo", 
-              label: "Tempo de preparo", textController: preparationTimeController, 
+            DefaultInputFormFieldWithRecipe(
+              BorderColor: MyApp.primaryColor, 
+              definedWidth: availableWidth * 0.9, 
+              hintText: "Informe o tempo de preparo", 
+              label: "Tempo de preparo", 
+              //textController: preparationTimeController, 
               validateFunc: (){}, paddingLeft: availableWidth* 0.01, 
               paddingTop: availableHeight * 0.02, 
               keyboardType: TextInputType.name, 
-              //initialValue: preparationTime,
+              initialValue: recipe.getPreparationTime,
               onSaved: (String? value){
-                preparationTime = preparationTimeController.text;
+                preparationTime = value!;
                 print(value);
               }, 
             ),
@@ -157,16 +202,19 @@ class _EditRecipePageState extends State<EditRecipePage> {
               },
               value: categoryName,
             ),
-            DefaultInputFormField(BorderColor: MyApp.primaryColor, definedWidth: availableWidth * 0.9, hintText: "Adicione o número de porções", 
-              label: "Número de porções", textController: numberOfPortionsController, 
+            DefaultInputFormFieldWithRecipe(
+              BorderColor: MyApp.primaryColor, 
+              definedWidth: availableWidth * 0.9, 
+              hintText: "Adicione o número de porções", 
+              label: "Número de porções",  
               validateFunc: (){}, 
               paddingLeft: availableWidth* 0.01, 
               paddingTop: availableHeight * 0.02, 
               keyboardType: TextInputType.name, 
-              //initialValue: numberOfPortions,
+              initialValue: recipe.getNumberOfPortion,
               onSaved: (String? value){
                 setState(() {
-                  numberOfPortions = numberOfPortionsController.text;
+                  numberOfPortions = value!;
                   print(value);
                 });
               }, 
@@ -238,11 +286,11 @@ class _EditRecipePageState extends State<EditRecipePage> {
             ) 
             : Container(),
             defaultButton(
-              label: "Cadastrar", 
+              label: "Alterar receita", 
               function: (){
                 if (_formKey.currentState!.validate()) {
                    _formKey.currentState!.save();
-                  
+                   _submitAlteringRecipe(recipe.getId);
                 }
               }, 
               buttonColor: MyApp.primaryColor

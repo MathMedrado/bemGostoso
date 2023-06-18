@@ -88,7 +88,7 @@ class _RecipesPageState extends State<RecipesPage> {
 
   sendToCategoryPage(int id) async {
     List<Recipe> listOfRecipeCategory = [];
-    Uri url = Uri.parse("${MyApp.baseUrl}/app/recipe?category=${id}");
+    Uri url = Uri.parse("${MyApp.baseUrl}/app/recipe/?category=${id}");
     var response = await http.get(url);
     if(response.statusCode == 200){
       var data = jsonDecode(response.body);

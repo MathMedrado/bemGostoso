@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:intl/intl.dart';
 import 'package:bemgostoso/components/defaultButton.dart';
 import 'package:bemgostoso/components/userProfileText.dart';
 import 'package:bemgostoso/main.dart';
@@ -39,7 +39,7 @@ Future<User> getUserInfo() async {
     String auth = await MyApp.getBasicAuthentication();
 
 
-    Uri url = Uri.parse("${MyApp.baseUrl}/user/$userId");
+    Uri url = Uri.parse("${MyApp.baseUrl}/user/$userId/");
     var response = await http.get(url, headers: <String, String> {
       'authorization' : auth
     });
@@ -108,15 +108,15 @@ Future<User> getUserInfo() async {
           SizedBox(height: availableHeight * 0.02,),
           UserProfileText(
             label: "Data de Nascimento", 
-            value: "${user.getBirthDate}",
+            value: DateFormat('dd/MM/yyyy').format(user.getBirthDate as DateTime),
             topPadding: availableHeight * 0.01,
             leftPadding: availableWidth * 0.03,
           ),
           SizedBox(height: availableHeight * 0.04,),
-          Container(
-            padding: EdgeInsets.only(left: availableWidth * 0.03),
-            child: defaultButton(label: "Alterar dados", function: () => Navigator.of(context).pushNamed(MyApp.EDITUSER, arguments: user), buttonColor: MyApp.primaryColor)
-            ),
+          // Container(
+          //   padding: EdgeInsets.only(left: availableWidth * 0.03),
+          //   child: defaultButton(label: "Alterar dados", function: () => Navigator.of(context).pushNamed(MyApp.EDITUSER, arguments: user), buttonColor: MyApp.primaryColor)
+          //   ),
           Container(
             padding: EdgeInsets.only(left: availableWidth * 0.03),
             child: defaultButton(label: "Excluir conta", function: () => Navigator.of(context).pushNamed(MyApp.EXCLUDPROFILE, arguments: user), buttonColor: MyApp.primaryColor)

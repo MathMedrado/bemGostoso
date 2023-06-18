@@ -16,8 +16,9 @@ class RecipeDetail extends StatelessWidget {
   
   sendToAuthorPage(int id, context) async {
     List<Recipe> listOfRecipeAuthor = [];
-    Uri url = Uri.parse("${MyApp.baseUrl}/app/recipe?user=${id}");
+    Uri url = Uri.parse("${MyApp.baseUrl}/app/recipe/?user=${id}");
     var response = await http.get(url);
+    print(response.statusCode);
     print(response.body);
     print(id);
     if(response.statusCode == 200){
